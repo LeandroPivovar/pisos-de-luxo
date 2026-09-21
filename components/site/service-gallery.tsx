@@ -10,7 +10,7 @@ type GalleryImage = { src: string; alt: string };
 const SLIDE_MS = 5000;
 
 export function ServiceGallery({ images }: { images: GalleryImage[] }) {
-  const { index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe, hover } = useCarousel(images.length, () => SLIDE_MS);
+  const { rootRef, index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe } = useCarousel<HTMLDivElement>(images.length, () => SLIDE_MS);
   const railRef = useRef<HTMLDivElement>(null);
   const image = images[index];
 
@@ -22,7 +22,7 @@ export function ServiceGallery({ images }: { images: GalleryImage[] }) {
   }, [index]);
 
   return (
-    <div className="showcase" {...hover} aria-roledescription="carrossel" aria-label="Obras entregues">
+    <div className="showcase" ref={rootRef} aria-roledescription="carrossel" aria-label="Obras entregues">
       <div className="showcase-stage" {...swipe}>
         {images.map((item, i) => {
           // Only the current slide and its neighbours are mounted, so the crossfade works without loading every photo.
@@ -61,7 +61,7 @@ export function ServiceGallery({ images }: { images: GalleryImage[] }) {
             aria-label={`Ver foto ${i + 1}: ${item.alt}`}
             onClick={() => go(i)}
           >
-            <Image src={item.src} alt="" fill sizes="140px" />
+            <Image src={item.src.replace("/galeria/", "/galeria/thumbs/")} alt="" fill sizes="120px" />
             {i === index && autoplay && (
               <span
                 className="carousel-progress"

@@ -5,11 +5,13 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent } from "rea
 /**
  * Shared state for the autoplaying carousels. A timer advances the slides and keeps the
  * remaining time across pauses; the CSS progress bar only mirrors it visually.
+ * Autoplay runs while the carousel is on screen, unless the visitor paused it or prefers reduced motion.
  */
-export function useCarousel(count: number, durationOf: (index: number) => number) {
+export function useCarousel<T extends HTMLElement>(count: number, durationOf: (index: number) => number) {
+  const rootRef = useRef<T>(null);
   const [index, setIndex] = useState(0);
-  const [hovered, setHovered] = useState(false);
   const [stopped, setStopped] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const startX = useRef<number | null>(null);
 
@@ -21,12 +23,20 @@ export function useCarousel(count: number, durationOf: (index: number) => number
     return () => query.removeEventListener("change", sync);
   }, []);
 
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.25 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const go = useCallback((target: number) => setIndex(((target % count) + count) % count), [count]);
   const next = useCallback(() => setIndex((value) => (value + 1) % count), [count]);
   const prev = useCallback(() => setIndex((value) => (value - 1 + count) % count), [count]);
 
   const autoplay = !reducedMotion && !stopped;
-  const paused = !autoplay || hovered;
+  const paused = !autoplay || !visible;
   const duration = durationOf(index);
   const remaining = useRef(duration);
 
@@ -52,14 +62,8 @@ export function useCarousel(count: number, durationOf: (index: number) => number
       startX.current = null;
       if (Math.abs(delta) > 40) (delta < 0 ? next : prev)();
     },
+    onPointerCancel: () => { startX.current = null; },
   };
 
-  const hover = {
-    onMouseEnter: () => setHovered(true),
-    onMouseLeave: () => setHovered(false),
-    onFocus: () => setHovered(true),
-    onBlur: () => setHovered(false),
-  };
-
-  return { index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe, hover };
+  return { rootRef, index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe };
 }

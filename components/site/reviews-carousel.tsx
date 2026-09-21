@@ -9,11 +9,11 @@ type Review = { name: string; text: string; badge?: string };
 const durationFor = (text: string) => Math.max(6000, Math.round((text.length / 18) * 1000));
 
 export function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
-  const { index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe, hover } = useCarousel(reviews.length, (i) => durationFor(reviews[i].text));
+  const { rootRef, index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe } = useCarousel<HTMLDivElement>(reviews.length, (i) => durationFor(reviews[i].text));
   const review = reviews[index];
 
   return (
-    <div className="reviews" {...hover} aria-roledescription="carrossel" aria-label="Avaliações de clientes">
+    <div className="reviews" ref={rootRef} aria-roledescription="carrossel" aria-label="Avaliações de clientes">
       <figure className="review-feature" {...swipe}>
         <div className="stars" aria-label="5 estrelas">
           {[0, 1, 2, 3, 4].map((star) => <Star key={star} size={18} fill="currentColor" />)}
