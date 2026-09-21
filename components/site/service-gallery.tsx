@@ -1,75 +1,95 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useCarousel } from "./use-carousel";
 
 type GalleryImage = { src: string; alt: string };
 
-const SLIDE_MS = 5000;
+const SLIDE_MS = 4500;
+const VISIBLE = 3; // cards rendered on each side of the active one (the outermost fade in/out)
+
+// Coverflow geometry per distance from the centre card: horizontal shift (% of card width), scale, tilt.
+const SHIFT = [0, 64, 112, 150];
+const SCALE = [1, 0.86, 0.74, 0.64];
+const TILT = [0, 16, 24, 28];
+
+function offsetOf(i: number, index: number, count: number) {
+  let offset = i - index;
+  if (offset > count / 2) offset -= count;
+  if (offset < -count / 2) offset += count;
+  return offset;
+}
 
 export function ServiceGallery({ images }: { images: GalleryImage[] }) {
-  const { rootRef, index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe } = useCarousel<HTMLDivElement>(images.length, () => SLIDE_MS);
-  const railRef = useRef<HTMLDivElement>(null);
-  const image = images[index];
-
-  useEffect(() => {
-    const rail = railRef.current;
-    const thumb = rail?.children[index] as HTMLElement | undefined;
-    if (!rail || !thumb) return;
-    rail.scrollTo({ left: thumb.offsetLeft - rail.clientWidth / 2 + thumb.clientWidth / 2, behavior: "smooth" });
-  }, [index]);
+  const { rootRef, index, go, next, prev, autoplay, paused, duration, stopped, setStopped, swipe } =
+    useCarousel<HTMLDivElement>(images.length, () => SLIDE_MS);
 
   return (
-    <div className="showcase" ref={rootRef} aria-roledescription="carrossel" aria-label="Obras entregues">
-      <div className="showcase-stage" {...swipe}>
+    <div className="coverflow" ref={rootRef} aria-roledescription="carrossel" aria-label="Obras entregues">
+      <div className="coverflow-stage" {...swipe}>
         {images.map((item, i) => {
-          // Only the current slide and its neighbours are mounted, so the crossfade works without loading every photo.
-          const distance = Math.min(Math.abs(i - index), images.length - Math.abs(i - index));
-          if (distance > 1) return null;
+          const offset = offsetOf(i, index, images.length);
+          const distance = Math.abs(offset);
+          if (distance > VISIBLE) return null;
+          const side = Math.sign(offset);
+          const active = offset === 0;
           return (
-          <div className="showcase-slide" data-active={i === index} aria-hidden={i !== index} key={item.src}>
-            <Image className="showcase-backdrop" src={item.src} alt="" fill sizes="10vw" aria-hidden="true" />
-            <Image className="showcase-photo" src={item.src} alt={item.alt} fill sizes="(max-width: 760px) 100vw, 1380px" />
-          </div>
+            <button
+              key={item.src}
+              type="button"
+              className="coverflow-card"
+              data-active={active}
+              aria-hidden={distance > 2}
+              tabIndex={distance > 2 ? -1 : 0}
+              aria-label={active ? item.alt : `Ver foto: ${item.alt}`}
+              aria-current={active}
+              onClick={() => go(i)}
+              style={{
+                transform: `translateX(${side * SHIFT[distance]}%) scale(${SCALE[distance]}) rotateY(${-side * TILT[distance]}deg)`,
+                zIndex: 10 - distance,
+                opacity: distance === VISIBLE ? 0 : 1,
+              }}
+            >
+              <Image src={item.src.replace("/galeria/", "/galeria/card/")} alt="" fill sizes="(max-width: 760px) 70vw, 400px" draggable={false} />
+              <span className="coverflow-chip">
+                <span className="coverflow-avatar" aria-hidden="true">PL</span>
+                <span>
+                  <strong>Pisos de Luxo</strong>
+                  <small>Obra entregue</small>
+                </span>
+              </span>
+              {active && autoplay && (
+                <span
+                  className="carousel-progress"
+                  style={{ animationDuration: `${duration}ms`, animationPlayState: paused ? "paused" : "running" }}
+                />
+              )}
+            </button>
           );
         })}
 
-        <div className="showcase-bar">
-          <p aria-live="polite">
-            <span>{String(index + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</span>
-            {image.alt}
-          </p>
-          <div className="carousel-controls">
-            <button type="button" onClick={prev} aria-label="Foto anterior"><ChevronLeft size={20} /></button>
-            <button type="button" onClick={() => setStopped(!stopped)} aria-label={stopped ? "Retomar apresentação" : "Pausar apresentação"}>
-              {stopped ? <Play size={17} /> : <Pause size={17} />}
-            </button>
-            <button type="button" onClick={next} aria-label="Próxima foto"><ChevronRight size={20} /></button>
-          </div>
-        </div>
+        <button type="button" className="coverflow-arrow coverflow-prev" onClick={prev} aria-label="Foto anterior">
+          <ChevronLeft size={20} />
+        </button>
+        <button type="button" className="coverflow-arrow coverflow-next" onClick={next} aria-label="Próxima foto">
+          <ChevronRight size={20} />
+        </button>
       </div>
 
-      <div className="showcase-rail" ref={railRef}>
-        {images.map((item, i) => (
-          <button
-            key={item.src}
-            type="button"
-            className="showcase-thumb"
-            aria-current={i === index}
-            aria-label={`Ver foto ${i + 1}: ${item.alt}`}
-            onClick={() => go(i)}
-          >
-            <Image src={item.src.replace("/galeria/", "/galeria/thumbs/")} alt="" fill sizes="120px" />
-            {i === index && autoplay && (
-              <span
-                className="carousel-progress"
-                style={{ animationDuration: `${duration}ms`, animationPlayState: paused ? "paused" : "running" }}
-              />
-            )}
-          </button>
-        ))}
+      <div className="coverflow-footer">
+        <p aria-live="polite">
+          <span>{String(index + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</span>
+          {images[index].alt}
+        </p>
+        <button
+          type="button"
+          className="coverflow-pause"
+          onClick={() => setStopped(!stopped)}
+          aria-label={stopped ? "Retomar apresentação" : "Pausar apresentação"}
+        >
+          {stopped ? <Play size={16} /> : <Pause size={16} />}
+        </button>
       </div>
     </div>
   );
