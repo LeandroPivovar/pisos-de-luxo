@@ -12,10 +12,10 @@ import {
   Phone,
   Ruler,
   ShieldCheck,
-  Star,
 } from "lucide-react";
 import { brands, galleryImages, reviews } from "./catalog-data";
 import { BrandCatalog } from "@/components/site/brand-catalog";
+import { ReviewsCarousel } from "@/components/site/reviews-carousel";
 import { ServiceGallery } from "@/components/site/service-gallery";
 
 const whatsappUrl =
@@ -25,8 +25,8 @@ const services = [
   {
     title: "Pisos vinílicos",
     copy: "Conforto acústico, toque agradável e resistência para uma rotina mais leve.",
-    image: "/assets/projeto-cozinha.png",
-    alt: "Cozinha integrada com piso vinílico amadeirado",
+    image: "/assets/galeria/servico-15.jpg",
+    alt: "Sala de estar e jantar integradas com piso vinílico amadeirado",
     className: "service-card service-card-large",
   },
   {
@@ -42,8 +42,8 @@ const services = [
   {
     title: "Papel de parede",
     copy: "Textura e personalidade para completar o ambiente com uma composição coerente.",
-    image: "/assets/projeto-escritorio.png",
-    alt: "Escritório finalizado com piso amadeirado e parede texturizada",
+    image: "/assets/galeria/servico-07.jpg",
+    alt: "Estúdio com piso claro e parede de textura cimentícia",
     className: "service-card service-card-image",
   },
 ];
@@ -159,7 +159,7 @@ export default function Home() {
             <a className="button button-primary" href={whatsappUrl} target="_blank" rel="noreferrer">
               Pedir orçamento <ArrowRight size={18} />
             </a>
-            <a className="button button-ghost" href="#projetos">Ver projetos</a>
+            <a className="button button-ghost" href="#galeria">Ver obras</a>
           </div>
         </div>
       </section>
@@ -222,29 +222,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section project-section" id="projetos">
-        <div className="page-shell">
-          <div className="section-heading project-heading">
-            <h2>Ambientes entregues. Detalhes que permanecem.</h2>
-            <p>Projetos reais que mostram como o piso certo muda a luz, a amplitude e a sensação do espaço.</p>
-          </div>
-          <div className="project-grid">
-            <figure className="project project-office">
-              <div className="project-media"><Image src="/assets/projeto-escritorio.png" alt="Escritório com piso amadeirado instalado" fill sizes="(max-width: 760px) 100vw, 44vw" /></div>
-              <figcaption><strong>Escritório</strong><span>Conforto desde a recepção</span></figcaption>
-            </figure>
-            <figure className="project project-kitchen">
-              <div className="project-media"><Image src="/assets/projeto-cozinha.png" alt="Cozinha integrada com piso amadeirado" fill sizes="(max-width: 760px) 100vw, 26vw" /></div>
-              <figcaption><strong>Cozinha integrada</strong><span>Continuidade visual</span></figcaption>
-            </figure>
-            <figure className="project project-living">
-              <div className="project-media"><Image src="/assets/projeto-sala.png" alt="Sala ampla com piso vinílico amadeirado" fill sizes="(max-width: 760px) 100vw, 30vw" /></div>
-              <figcaption><strong>Sala de estar</strong><span>Amplitude e acolhimento</span></figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
       <section className="section page-shell gallery-section" id="galeria">
         <div className="section-heading">
           <p className="section-kicker">Serviços realizados</p>
@@ -267,8 +244,8 @@ export default function Home() {
         </div>
         <div className="stage-pair">
           <figure>
-            <div className="stage-media"><Image src="/assets/obra-preparacao.png" alt="Contrapiso preparado antes da instalação" fill sizes="(max-width: 760px) 100vw, 28vw" /></div>
-            <figcaption>Preparação técnica</figcaption>
+            <div className="stage-media"><Image src="/assets/galeria/servico-18.jpg" alt="Instalação de rodapé em sala com piso cinza" fill sizes="(max-width: 760px) 100vw, 28vw" /></div>
+            <figcaption>Instalação em andamento</figcaption>
           </figure>
           <figure>
             <div className="stage-media"><Image src="/assets/hero-pisos-de-luxo.png" alt="Ambiente finalizado com piso amadeirado" fill sizes="(max-width: 760px) 100vw, 42vw" /></div>
@@ -307,26 +284,13 @@ export default function Home() {
             <h2>A confiança aparece no resultado.</h2>
             <p>Avaliações 5 estrelas deixadas no Google por clientes que já transformaram seus ambientes com a Pisos de Luxo.</p>
           </div>
-          <div className="quote-wall">
-            {reviews.map((review) => (
-              <blockquote key={review.name}>
-                <div className="stars" aria-label="5 estrelas">
-                  {[0, 1, 2, 3, 4].map((star) => <Star key={star} size={16} fill="currentColor" />)}
-                </div>
-                <p>“{review.text}”</p>
-                <footer>
-                  <strong>{review.name}</strong>
-                  <span>{review.badge ? `${review.badge} · Google` : "Avaliação no Google"}</span>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
+          <ReviewsCarousel reviews={reviews} />
         </div>
       </section>
 
       <section className="section page-shell faq-section">
         <div className="faq-visual">
-          <Image src="/assets/projeto-sala.png" alt="Detalhe de sala finalizada com piso amadeirado" fill sizes="(max-width: 760px) 100vw, 32vw" />
+          <Image src="/assets/galeria/servico-10.jpg" alt="Sala ampla com piso vinílico cinza amadeirado" fill sizes="(max-width: 760px) 100vw, 32vw" />
         </div>
         <div className="faq-content">
           <div className="section-heading">
