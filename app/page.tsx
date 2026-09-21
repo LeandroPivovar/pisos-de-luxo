@@ -14,6 +14,9 @@ import {
   ShieldCheck,
   Star,
 } from "lucide-react";
+import { brands, galleryImages, reviews } from "./catalog-data";
+import { BrandCatalog } from "@/components/site/brand-catalog";
+import { ServiceGallery } from "@/components/site/service-gallery";
 
 const whatsappUrl =
   "https://wa.me/5547988198456?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20meu%20ambiente.";
@@ -72,7 +75,7 @@ const faqs = [
   {
     question: "Quais tipos de piso vocês trabalham?",
     answer:
-      "Trabalhamos com pisos vinílicos e laminados, além de rodapés e papel de parede. A indicação considera o uso do ambiente, o estilo e o investimento disponível.",
+      "Trabalhamos com pisos vinílicos e laminados, além de rodapés, painéis ripados e papel de parede, com marcas como Quick-Step, Tarkett, Eucafloor, Ruffino, Casa Grassi, StatoFloor, Arquitech, Realfloor e Pix. A indicação considera o uso do ambiente, o estilo e o investimento disponível.",
   },
   {
     question: "Como pedir um orçamento?",
@@ -112,8 +115,9 @@ export default function Home() {
 
         <nav className="desktop-nav" aria-label="Navegação principal">
           <a href="#servicos">Serviços</a>
-          <a href="#projetos">Projetos</a>
-          <a href="#processo">Como funciona</a>
+          <a href="#marcas">Marcas</a>
+          <a href="#catalogo">Catálogo</a>
+          <a href="#galeria">Galeria</a>
           <a href="#depoimentos">Avaliações</a>
         </nav>
 
@@ -125,7 +129,9 @@ export default function Home() {
           <summary aria-label="Abrir menu"><Menu size={24} /></summary>
           <nav aria-label="Navegação móvel">
             <a href="#servicos">Serviços</a>
-            <a href="#projetos">Projetos</a>
+            <a href="#marcas">Marcas</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#galeria">Galeria</a>
             <a href="#processo">Como funciona</a>
             <a href="#depoimentos">Avaliações</a>
             <a href={whatsappUrl} target="_blank" rel="noreferrer">Pedir orçamento</a>
@@ -187,6 +193,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="brands-section" id="marcas" aria-labelledby="marcas-titulo">
+        <div className="page-shell">
+          <div className="brands-heading">
+            <p className="section-kicker">Marcas parceiras</p>
+            <h2 id="marcas-titulo">Trabalhamos com fabricantes que respeitam o seu projeto.</h2>
+          </div>
+          <ul className="brand-wall">
+            {brands.map((brand) => (
+              <li key={brand.slug}>
+                <a href={`#catalogo-${brand.slug}`} aria-label={`Ver catálogo ${brand.name}`}>
+                  <Image src={brand.logo.src} alt={brand.name} width={brand.logo.width} height={brand.logo.height} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section catalog-section" id="catalogo">
+        <div className="page-shell">
+          <div className="section-heading">
+            <p className="section-kicker">Catálogo</p>
+            <h2>Linhas, formatos e cores de cada marca.</h2>
+            <p>Escolha uma marca para ver as linhas disponíveis, as especificações técnicas e as opções de cor. Na dúvida, a equipe ajuda a comparar.</p>
+          </div>
+          <BrandCatalog brands={brands} />
+        </div>
+      </section>
+
       <section className="section project-section" id="projetos">
         <div className="page-shell">
           <div className="section-heading project-heading">
@@ -208,6 +243,15 @@ export default function Home() {
             </figure>
           </div>
         </div>
+      </section>
+
+      <section className="section page-shell gallery-section" id="galeria">
+        <div className="section-heading">
+          <p className="section-kicker">Serviços realizados</p>
+          <h2>Obras entregues pela nossa equipe.</h2>
+          <p>Registros de instalações de pisos, rodapés e escadas em casas, apartamentos e espaços comerciais da região.</p>
+        </div>
+        <ServiceGallery images={galleryImages} />
       </section>
 
       <section className="section page-shell transformation">
@@ -261,23 +305,21 @@ export default function Home() {
           <p className="section-kicker">Avaliações reais</p>
           <div className="testimonials-heading">
             <h2>A confiança aparece no resultado.</h2>
-            <p>Atendimento, materiais e acabamento reconhecidos por quem já vive a transformação.</p>
+            <p>Avaliações 5 estrelas deixadas no Google por clientes que já transformaram seus ambientes com a Pisos de Luxo.</p>
           </div>
           <div className="quote-wall">
-            <blockquote>
-              <div className="stars" aria-label="5 estrelas">
-                {[0, 1, 2, 3, 4].map((star) => <Star key={star} size={18} fill="currentColor" />)}
-              </div>
-              <p>“Super recomendo. Muito bom o atendimento, materiais de qualidade e equipe muito prestativa.”</p>
-              <footer><strong>Marcelo de Souza</strong><span>Cliente Pisos de Luxo</span></footer>
-            </blockquote>
-            <blockquote>
-              <div className="stars" aria-label="5 estrelas">
-                {[0, 1, 2, 3, 4].map((star) => <Star key={star} size={18} fill="currentColor" />)}
-              </div>
-              <p>“Ótimo serviço, qualidade, compromisso com o prazo e mão de obra excelente.”</p>
-              <footer><strong>Clarice Motta</strong><span>Cliente Pisos de Luxo</span></footer>
-            </blockquote>
+            {reviews.map((review) => (
+              <blockquote key={review.name}>
+                <div className="stars" aria-label="5 estrelas">
+                  {[0, 1, 2, 3, 4].map((star) => <Star key={star} size={16} fill="currentColor" />)}
+                </div>
+                <p>“{review.text}”</p>
+                <footer>
+                  <strong>{review.name}</strong>
+                  <span>{review.badge ? `${review.badge} · Google` : "Avaliação no Google"}</span>
+                </footer>
+              </blockquote>
+            ))}
           </div>
         </div>
       </section>
@@ -324,7 +366,8 @@ export default function Home() {
           <p>Pisos e acabamentos que transformam ambientes.</p>
           <nav aria-label="Navegação do rodapé">
             <a href="#servicos">Serviços</a>
-            <a href="#projetos">Projetos</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#galeria">Galeria</a>
             <a href="#processo">Como funciona</a>
           </nav>
         </div>
