@@ -13,38 +13,59 @@ import {
   Ruler,
   ShieldCheck,
 } from "lucide-react";
-import { brands, galleryImages, reviews } from "./catalog-data";
+import { brands, reviews } from "./catalog-data";
 import { BrandCatalog } from "@/components/site/brand-catalog";
 import { ReviewsCarousel } from "@/components/site/reviews-carousel";
-import { ServiceGallery } from "@/components/site/service-gallery";
+import { ServicePhotoGallery } from "@/components/site/service-photo-gallery";
 
 const whatsappUrl =
   "https://wa.me/5547988198456?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20meu%20ambiente.";
 
 const services = [
   {
-    title: "Pisos vinílicos",
-    copy: "Conforto acústico, toque agradável e resistência para uma rotina mais leve.",
-    image: "/assets/galeria/servico-15.jpg",
-    alt: "Sala de estar e jantar integradas com piso vinílico amadeirado",
-    className: "service-card service-card-large",
+    title: "Piso vinílico",
+    slug: "piso-vinilico",
+    photos: [
+      { src: "/assets/galeria/servico-06.jpg", alt: "Piso vinílico amadeirado em escritório" },
+      { src: "/assets/galeria/servico-09.jpg", alt: "Piso vinílico claro em quarto" },
+      { src: "/assets/servicos/piso-amadeirado-painel-ripado.jpeg", alt: "Piso vinílico amadeirado em quarto com painel ripado" },
+    ],
   },
   {
-    title: "Pisos laminados",
-    copy: "Visual acolhedor, instalação eficiente e excelente relação entre beleza e praticidade.",
-    className: "service-card service-card-text service-card-laminate",
+    title: "Rodapé",
+    slug: "rodape",
+    photos: [
+      { src: "/assets/servicos/piso-cinza-rodape-preto.jpeg", alt: "Rodapé preto contornando piso vinílico cinza" },
+      { src: "/assets/servicos/boiserie-rodape-corredor.jpeg", alt: "Rodapé branco no corredor com boiserie" },
+      { src: "/assets/servicos/rodape-branco-detalhe.jpeg", alt: "Detalhe do encontro do rodapé branco com piso amadeirado" },
+    ],
   },
   {
-    title: "Rodapés",
-    copy: "O encontro preciso entre piso e parede, com acabamento limpo em cada detalhe.",
-    className: "service-card service-card-text service-card-baseboard",
+    title: "Placa vinílica",
+    slug: "placa-vinilica",
+    photos: [
+      { src: "/assets/servicos/placa-vinilica-marmore-preto-branco.jpeg", alt: "Placas com efeito de mármore preto e branco em banheiro" },
+      { src: "/assets/servicos/placa-vinilica-marmore-claro.jpeg", alt: "Revestimento com efeito de mármore claro em parede de lavabo" },
+      { src: "/assets/servicos/placa-vinilica-marmore-preto.jpeg", alt: "Placas com efeito de mármore preto em banheiro" },
+    ],
   },
   {
-    title: "Papel de parede",
-    copy: "Textura e personalidade para completar o ambiente com uma composição coerente.",
-    image: "/assets/galeria/servico-07.jpg",
-    alt: "Estúdio com piso claro e parede de textura cimentícia",
-    className: "service-card service-card-image",
+    title: "Painel ripado",
+    slug: "painel-ripado",
+    photos: [
+      { src: "/assets/servicos/painel-ripado-entrada.jpeg", alt: "Painel ripado amadeirado na parede de entrada" },
+      { src: "/assets/servicos/painel-ripado-sala.jpeg", alt: "Painel ripado contornando a passagem da sala para a cozinha" },
+      { src: "/assets/servicos/painel-ripado-parede.jpeg", alt: "Painel ripado de madeira junto à parede do corredor" },
+    ],
+  },
+  {
+    title: "Boiserie",
+    slug: "boiserie",
+    photos: [
+      { src: "/assets/servicos/boiserie-detalhe.jpeg", alt: "Detalhe de boiserie em parede cinza com arandela" },
+      { src: "/assets/servicos/boiserie-corredor.jpeg", alt: "Boiserie branca ao longo da parede de um corredor" },
+      { src: "/assets/servicos/boiserie-parede-cinza.jpeg", alt: "Molduras de boiserie em parede cinza" },
+    ],
   },
 ];
 
@@ -75,7 +96,7 @@ const faqs = [
   {
     question: "Quais tipos de piso vocês trabalham?",
     answer:
-      "Trabalhamos com pisos vinílicos e laminados, além de rodapés, painéis ripados e papel de parede, com marcas como Quick-Step, Tarkett, Eucafloor, Ruffino, Casa Grassi, StatoFloor, Arquitech, Realfloor e Pix. A indicação considera o uso do ambiente, o estilo e o investimento disponível.",
+      "Trabalhamos com piso vinílico e placa vinílica, além de rodapés, painéis ripados e boiserie. A indicação considera o uso do ambiente, o estilo e o investimento disponível.",
   },
   {
     question: "Como pedir um orçamento?",
@@ -159,39 +180,18 @@ export default function Home() {
             <a className="button button-primary" href={whatsappUrl} target="_blank" rel="noreferrer">
               Pedir orçamento <ArrowRight size={18} />
             </a>
-            <a className="button button-ghost" href="#galeria">Ver obras</a>
+            <a className="button button-ghost" href="#galeria">Ver serviços</a>
           </div>
         </div>
       </section>
 
       <div className="service-ribbon" aria-label="Principais soluções">
-        <span>Pisos vinílicos</span>
-        <span>Pisos laminados</span>
-        <span>Rodapés</span>
-        <span>Papel de parede</span>
+        <span>Piso vinílico</span>
+        <span>Rodapé</span>
+        <span>Placa vinílica</span>
+        <span>Painel ripado</span>
+        <span>Boiserie</span>
       </div>
-
-      <section className="section page-shell services" id="servicos">
-        <div className="section-heading">
-          <h2>Soluções que transformam por inteiro.</h2>
-          <p>Do piso ao acabamento final, cada escolha é orientada para combinar beleza, durabilidade e uso real.</p>
-        </div>
-        <div className="services-grid">
-          {services.map((service) => (
-            <article className={service.className} key={service.title}>
-              {service.image && (
-                <div className="service-media">
-                  <Image src={service.image} alt={service.alt ?? ""} fill sizes="(max-width: 760px) 100vw, 50vw" />
-                </div>
-              )}
-              <div className="service-copy">
-                <h3>{service.title}</h3>
-                <p>{service.copy}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
 
       <section className="brands-section" id="marcas" aria-labelledby="marcas-titulo">
         <div className="page-shell">
@@ -222,13 +222,23 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section page-shell gallery-section" id="galeria">
-        <div className="section-heading">
-          <p className="section-kicker">Serviços realizados</p>
-          <h2>Obras entregues pela nossa equipe.</h2>
-          <p>Registros de instalações de pisos, rodapés e escadas em casas, apartamentos e espaços comerciais da região.</p>
+      <section className="section page-shell gallery-section" id="servicos">
+        <div className="section-heading" id="galeria">
+          <p className="section-kicker">Nossos serviços</p>
+          <h2>Acabamentos para cada ambiente.</h2>
+          <p>Veja os detalhes de cada serviço em ambientes reais.</p>
         </div>
-        <ServiceGallery images={galleryImages} />
+        <div className="service-galleries">
+          {services.map((service, serviceIndex) => (
+            <section className="service-gallery-group" key={service.slug} aria-labelledby={`${service.slug}-titulo`}>
+              <div className="service-gallery-heading">
+                <span aria-hidden="true">{String(serviceIndex + 1).padStart(2, "0")}</span>
+                <h3 id={`${service.slug}-titulo`}>{service.title}</h3>
+              </div>
+              <ServicePhotoGallery title={service.title} photos={service.photos} />
+            </section>
+          ))}
+        </div>
       </section>
 
       <section className="section page-shell transformation">
