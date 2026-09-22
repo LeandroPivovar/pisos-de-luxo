@@ -563,7 +563,7 @@ summary:focus-visible {
 }
 
 .supplies-section {
-  background: var(--surface);
+  background: transparent;
   padding-block: clamp(74px, 8vw, 118px);
 }
 
@@ -584,10 +584,9 @@ summary:focus-visible {
   display: grid;
   grid-template-rows: minmax(165px, 1fr) auto;
   overflow: hidden;
-  border: 1px solid rgba(23, 24, 26, 0.12);
+  border: 1px solid rgba(247, 246, 242, 0.18);
   border-radius: 14px;
-  background: rgba(247, 246, 242, 0.72);
-  box-shadow: 0 18px 50px rgba(42, 36, 32, 0.08);
+  background: transparent;
 }
 
 .supply-card::before {
@@ -603,25 +602,17 @@ summary:focus-visible {
   min-height: 165px;
 }
 
-.supply-card-media::before {
-  content: "";
-  position: absolute;
-  inset: 18% 7% 8%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(183, 22, 32, 0.1), rgba(183, 22, 32, 0));
-}
-
 .supply-card-media img {
   object-fit: contain;
   padding: 10px;
-  filter: drop-shadow(0 18px 20px rgba(23, 24, 26, 0.18));
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.28));
 }
 
 .supply-card-copy {
   position: relative;
   z-index: 1;
   padding-top: 14px;
-  border-top: 1px solid rgba(23, 24, 26, 0.1);
+  border-top: 1px solid rgba(247, 246, 242, 0.14);
 }
 
 .supply-card-copy span {
