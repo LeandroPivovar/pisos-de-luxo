@@ -193,6 +193,36 @@ export default function Home() {
         <span>Boiserie</span>
       </div>
 
+      <section className="section page-shell gallery-section" id="servicos">
+        <div className="section-heading" id="galeria">
+          <p className="section-kicker">Nossos serviços</p>
+          <h2>Acabamentos para cada ambiente.</h2>
+          <p>Veja os detalhes de cada serviço em ambientes reais.</p>
+        </div>
+        <div className="service-galleries">
+          {services.map((service, serviceIndex) => (
+            <section className="service-gallery-group" key={service.slug} aria-labelledby={`${service.slug}-titulo`}>
+              <div className="service-gallery-heading">
+                <span aria-hidden="true">{String(serviceIndex + 1).padStart(2, "0")}</span>
+                <h3 id={`${service.slug}-titulo`}>{service.title}</h3>
+              </div>
+              <ServicePhotoGallery title={service.title} photos={service.photos} />
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section className="section testimonials" id="depoimentos">
+        <div className="page-shell">
+          <p className="section-kicker">Avaliações reais</p>
+          <div className="testimonials-heading">
+            <h2>A confiança aparece no resultado.</h2>
+            <p>Avaliações 5 estrelas deixadas no Google por clientes que já transformaram seus ambientes com a Pisos de Luxo.</p>
+          </div>
+          <ReviewsCarousel reviews={reviews} />
+        </div>
+      </section>
+
       <section className="brands-section" id="marcas" aria-labelledby="marcas-titulo">
         <div className="page-shell">
           <div className="brands-heading">
@@ -219,25 +249,6 @@ export default function Home() {
             <p>Escolha uma marca para ver as linhas disponíveis, as especificações técnicas e as opções de cor. Na dúvida, a equipe ajuda a comparar.</p>
           </div>
           <BrandCatalog brands={brands} />
-        </div>
-      </section>
-
-      <section className="section page-shell gallery-section" id="servicos">
-        <div className="section-heading" id="galeria">
-          <p className="section-kicker">Nossos serviços</p>
-          <h2>Acabamentos para cada ambiente.</h2>
-          <p>Veja os detalhes de cada serviço em ambientes reais.</p>
-        </div>
-        <div className="service-galleries">
-          {services.map((service, serviceIndex) => (
-            <section className="service-gallery-group" key={service.slug} aria-labelledby={`${service.slug}-titulo`}>
-              <div className="service-gallery-heading">
-                <span aria-hidden="true">{String(serviceIndex + 1).padStart(2, "0")}</span>
-                <h3 id={`${service.slug}-titulo`}>{service.title}</h3>
-              </div>
-              <ServicePhotoGallery title={service.title} photos={service.photos} />
-            </section>
-          ))}
         </div>
       </section>
 
@@ -284,17 +295,6 @@ export default function Home() {
             <span><Ruler size={19} /> Medição cuidadosa</span>
             <span><Hammer size={19} /> Instalação especializada</span>
           </div>
-        </div>
-      </section>
-
-      <section className="section testimonials" id="depoimentos">
-        <div className="page-shell">
-          <p className="section-kicker">Avaliações reais</p>
-          <div className="testimonials-heading">
-            <h2>A confiança aparece no resultado.</h2>
-            <p>Avaliações 5 estrelas deixadas no Google por clientes que já transformaram seus ambientes com a Pisos de Luxo.</p>
-          </div>
-          <ReviewsCarousel reviews={reviews} />
         </div>
       </section>
 
