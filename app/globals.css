@@ -564,6 +564,7 @@ summary:focus-visible {
 
 .supplies-section {
   background: var(--surface);
+  padding-block: clamp(74px, 8vw, 118px);
 }
 
 .supplies-section .section-kicker {
@@ -572,16 +573,16 @@ summary:focus-visible {
 
 .supply-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .supply-card {
   position: relative;
-  min-height: 315px;
-  padding: 18px;
+  min-height: 282px;
+  padding: 16px;
   display: grid;
-  grid-template-rows: minmax(190px, 1fr) auto;
+  grid-template-rows: minmax(165px, 1fr) auto;
   overflow: hidden;
   border: 1px solid rgba(23, 24, 26, 0.12);
   border-radius: 14px;
@@ -599,7 +600,7 @@ summary:focus-visible {
 
 .supply-card-media {
   position: relative;
-  min-height: 190px;
+  min-height: 165px;
 }
 
 .supply-card-media::before {
@@ -636,10 +637,46 @@ summary:focus-visible {
 .supply-card-copy h3 {
   margin: 0;
   font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(25px, 2.2vw, 34px);
+  font-size: clamp(23px, 1.8vw, 30px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.025em;
+}
+
+.supply-pagination {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.supply-pagination button {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(23, 24, 26, 0.16);
+  border-radius: 999px;
+  background: rgba(247, 246, 242, 0.66);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.supply-pagination button:hover:not(:disabled),
+.supply-pagination button[data-active="true"] {
+  border-color: var(--red);
+  background: var(--red);
+  color: var(--off-white);
+}
+
+.supply-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
 }
 
 .stage-pair figcaption {
@@ -1960,7 +1997,16 @@ summary:focus-visible {
   }
 
   .supply-card-copy h3 {
-    font-size: 23px;
+    font-size: 21px;
+  }
+
+  .supply-pagination {
+    gap: 6px;
+  }
+
+  .supply-pagination button {
+    width: 38px;
+    height: 38px;
   }
 
   .service-gallery-photo {
