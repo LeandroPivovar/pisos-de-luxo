@@ -18,6 +18,7 @@ import { BrandCatalog } from "@/components/site/brand-catalog";
 import { ReviewsCarousel } from "@/components/site/reviews-carousel";
 import { ServiceGallery } from "@/components/site/service-gallery";
 import { ServicePhotoGallery } from "@/components/site/service-photo-gallery";
+import { SupplyGrid, type SupplyItem } from "@/components/site/supply-grid";
 
 const whatsappUrl =
   "https://wa.me/5547988198456?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20meu%20ambiente.";
@@ -68,6 +69,34 @@ const services = [
       { src: "/assets/servicos/boiserie-parede-cinza.jpeg", alt: "Molduras de boiserie em parede cinza" },
     ],
   },
+];
+
+const supplies: SupplyItem[] = [
+  { title: "Primer 516 Contrapiso", category: "Preparação", image: "/assets/insumos/primer-516-contrapiso.png", alt: "Primer 516 Contrapiso Protec" },
+  { title: "Massa Niveladora Quartzolit", category: "Preparação", image: "/assets/insumos/massa-niveladora-quartzolit.png", alt: "Massa niveladora Piso Prepara Pro Quartzolit" },
+  { title: "Cola para Piso Vinílico", category: "Adesivos", image: "/assets/insumos/cola-piso-vinilico-polivedo.png", alt: "Cola para piso vinílico Polivedo" },
+  { title: "Primer Multi Bases", category: "Preparação", image: "/assets/insumos/primer-multi-bases-protec.png", alt: "Primer Multi Bases Protec" },
+  { title: "Adesivo Acrílico Protec", category: "Adesivos", image: "/assets/insumos/adesivo-acrilico-protec.png", alt: "Adesivo Acrílico Protec para pisos vinílicos" },
+  { title: "Ultrabond ECO 4 LVT", category: "Adesivos", image: "/assets/insumos/ultrabond-eco-4-lvt.png", alt: "Adesivo Mapei Ultrabond ECO 4 LVT" },
+  { title: "Massa Regularização Planiprep", category: "Preparação", image: "/assets/insumos/massa-regularizacao-planiprep.png", alt: "Massa de regularização de piso Mapei Planiprep" },
+  { title: "Tarkett Globalfix", category: "Adesivos", image: "/assets/insumos/tarkett-globalfix.png", alt: "Adesivo Tarkett Globalfix" },
+  { title: "Tarkett Globalfix 23kg", category: "Adesivos", image: "/assets/insumos/tarkett-globalfix-detalhe.png", alt: "Adesivo Tarkett Globalfix 23kg" },
+  { title: "Bloqueador de Vapor Polivedo", category: "Impermeabilização", image: "/assets/insumos/bloqueador-vapor-polivedo.png", alt: "Bloqueador de vapor de umidade Polivedo" },
+  { title: "Cantoneira", category: "Perfis", image: "/assets/insumos/cantoneira.png", alt: "Perfil cantoneira para acabamento" },
+  { title: "Perfil Redutor", category: "Perfis", image: "/assets/insumos/perfil-redutor.png", alt: "Perfil redutor para acabamento de piso" },
+  { title: "Perfil T", category: "Perfis", image: "/assets/insumos/perfil-t.png", alt: "Perfil T para acabamento de piso" },
+  { title: "Perfil Arremate", category: "Perfis", image: "/assets/insumos/perfil-arremate.png", alt: "Perfil arremate para acabamento de piso" },
+  { title: "Rodameio 3cm", category: "Rodameios", image: "/assets/insumos/rodameio-3cm.png", alt: "Rodameio branco de 3 centímetros" },
+  { title: "Rodameio 4cm", category: "Rodameios", image: "/assets/insumos/rodameio-4cm.png", alt: "Rodameio branco de 4 centímetros" },
+  { title: "Rodameio 6cm", category: "Rodameios", image: "/assets/insumos/rodameio-6cm.png", alt: "Rodameio branco de 6 centímetros" },
+  { title: "Painel Ripado Slim Claro", category: "Painéis", image: "/assets/insumos/painel-ripado-slim-claro.png", alt: "Painel ripado slim em tom claro" },
+  { title: "Painel Ripado Madeira Escuro", category: "Painéis", image: "/assets/insumos/painel-ripado-madeira-escuro.png", alt: "Painel ripado em madeira escura" },
+  { title: "Painel Ripado Liso Cinza", category: "Painéis", image: "/assets/insumos/painel-ripado-liso-cinza.png", alt: "Painel ripado liso cinza" },
+  { title: "Painel Ripado Cru", category: "Painéis", image: "/assets/insumos/painel-ripado-cru.png", alt: "Painel ripado em tom cru" },
+  { title: "Painel Ripado Cumaru", category: "Painéis", image: "/assets/insumos/painel-ripado-cumaru.png", alt: "Painel ripado em tom cumaru" },
+  { title: "Painel Ripado Liso Claro", category: "Painéis", image: "/assets/insumos/painel-ripado-liso-claro.png", alt: "Painel ripado liso claro" },
+  { title: "Massa Autonivelante Base", category: "Preparação", image: "/assets/insumos/massa-autonivelante-base.png", alt: "Massa autonivelante Base Protec" },
+  { title: "Primer WP Protec", category: "Impermeabilização", image: "/assets/insumos/primer-wp-protec.png", alt: "Primer WP Protec" },
 ];
 
 const processSteps = [
@@ -140,6 +169,7 @@ export default function Home() {
           <a href="#marcas">Marcas</a>
           <a href="#catalogo">Catálogo</a>
           <a href="#galeria">Galeria</a>
+          <a href="#insumos">Insumos</a>
           <a href="#depoimentos">Avaliações</a>
         </nav>
 
@@ -154,6 +184,7 @@ export default function Home() {
             <a href="#marcas">Marcas</a>
             <a href="#catalogo">Catálogo</a>
             <a href="#galeria">Galeria</a>
+            <a href="#insumos">Insumos</a>
             <a href="#processo">Como funciona</a>
             <a href="#depoimentos">Avaliações</a>
             <a href={whatsappUrl} target="_blank" rel="noreferrer">Pedir orçamento</a>
@@ -231,6 +262,15 @@ export default function Home() {
             </section>
           ))}
         </div>
+      </section>
+
+      <section className="section page-shell supplies-section" id="insumos">
+        <div className="section-heading">
+          <p className="section-kicker">Insumos</p>
+          <h2>Materiais para preparar, instalar e finalizar.</h2>
+          <p>Produtos de apoio para contrapiso, colagem, acabamento e painéis, organizados para facilitar a escolha no orçamento.</p>
+        </div>
+        <SupplyGrid items={supplies} />
       </section>
 
       <section className="brands-section" id="marcas" aria-labelledby="marcas-titulo">
@@ -352,6 +392,7 @@ export default function Home() {
             <a href="#servicos">Serviços</a>
             <a href="#catalogo">Catálogo</a>
             <a href="#galeria">Galeria</a>
+            <a href="#insumos">Insumos</a>
             <a href="#processo">Como funciona</a>
           </nav>
         </div>
